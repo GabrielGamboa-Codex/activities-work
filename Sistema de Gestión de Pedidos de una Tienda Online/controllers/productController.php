@@ -5,10 +5,11 @@ class productController
 {
     public function indexProduct()
     {
+        $teamModel = new productModel(); 
+        $products = $teamModel->dataProduct();
         include __DIR__ . '/../views/header.php';
         include __DIR__ . '/../views/productView.php';
         include __DIR__ . '/../views/footer.php';
-        $teamModel = new TeamModel();
         return;
     }
 

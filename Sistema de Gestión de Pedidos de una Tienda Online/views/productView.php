@@ -1,54 +1,26 @@
 <?php
-require_once __DIR__ . '/../models/productModel.php';
-        $teamModel = new TeamModel();
-        $products = $teamModel->dataProduct();
-    function printDivModal($name,$price,$espacio,$img,$modalId,$contenido =" ",$idJs)
+    //funcion para imprimir el div
+    function printDiv($name,$price,$stock,$img)
     {
-        $espacio = ($espacio === "1") ? "ms-3" : "";
         echo"
-        <div class='card d-flex flex-column align-items-center border border-5 with-image {$espacio}'>
-            <img class='card-img-top padding-img ' src='public/img/{$img}' alt='Card image cap'>
-            <div class='card-body'>
-                <h5 class='card-title'>{$name}</h5>
-                    <p class='card-text'>Precio: {$price}</p>
-                    <button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#{$modalId}'>
+        <div class='col-md-2 me-4'>
+            <div class='card d-flex flex-column align-items-center border border-5 with-image'>
+                <img class='card-img-top padding-img ' src='public/img/{$img}' alt='Card image cap'>
+                <div class='card-body'>
+                    <h5 class='card-title'>{$name}</h5>
+                    <br>
+                    <p class='card-text'>Precio: {$price}$</p>
+                    <p class='card-text'>Stock: {$stock}</p>
+                    <button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#productModal'
+                    data-name='{$name}' 
+                    data-price='{$price}' 
+                    data-stock='{$stock}' 
+                    data-img='{$img}'>
                         View Details
                     </button>
-            </div>
-        </div>
-        <div class='modal fade modal-lg' id='{$modalId}' tabindex='-1' aria-labelledby='{$modalId}Label' aria-hidden='true'>
-            <div class='modal-dialog'>
-                <div class='modal-content'>
-                    <div class='modal-header'>
-                    <h1 class='modal-title fs-5' id='{$modalId}Label'>$name</h1>
-                    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-                    </div>
-                        <div class='modal-body d-flex justify-content-end align-items-start'>
-                            <div>
-                                {$contenido}
-                                </br></br></br></br></br>
-                                <p>Stock:</p>
-                                <p class='card-text'>Precio: {$price}</p>
-                                <div class='d-flex align-items-center'>
-                                    <p class='me-2 mb-0'>Cantidad:</p>
-                                    <div class='input-group input-group-sm' style='width: 80px;'>
-                                        <input type='number' class='form-control' aria-label='Small' aria-describedby='inputGroup-sizing-sm'>
-                                    </div>
-                                </div>
-                                <br>
-                                <p class='card-text'>Total:</p>
-                                </br></br>
-                            </div>
-                            <img class='img-fluid' src='public/img/{$img}' style='width: 300px; height: auto;' alt='Imagen del modal'>
-                        </div>
-                    <div class='modal-footer justify-content-center'>
-                        <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
-                        <button type='button' id='{$idJs}' class='btn btn-success'>Add to Shopping Car</button>
-                    </div>
                 </div>
             </div>
         </div>
-
     ";
     }
 ?>
@@ -62,28 +34,87 @@ require_once __DIR__ . '/../models/productModel.php';
 <br>
 <h1 class="text-center">List of Product</h1>
 <br><br>
-<div class="row justify-content-center">
-    <?php
-        printDivModal("Dorito 250gm",'7,5$',"0","doritos.webp",'doritosModal','Comida de Quezo empanizada referente a los estados unidos bien con el empaque','doritoJs');
-        printDivModal("Camisa Masculina",'35$',"1","camisa.avif",'camisaModal','Camisa de Lana 60% y 40% de Algodon talla L y XL, Masculino Original de la Marca MaxMen','camisaJs');
-        printDivModal('Chaleco de Invierno','125,39$',"1","chaleco.jpg",'chalecoModal','Chaleco invernal para epocas de Frio 90% de algodon, 10% pelo de cabra de la Marca Sinfrinas','chalecoJs');
-        printDivModal('Zapatos Masculinos Gala','42.04$',"1","zapato.png",'zapatosModal','Zapatos hechos de cuero de cocodrilo y serpiente amazaonicas 100% Original','zapatoJs');
-        printDivModal('Blusa Fushia','77$',"1","ropa-mujer.jpg",'blusaModal','Blusa hecha de Polietileno Adaptable al Frio original de la Marca Franshies','blusaJs');
-    ?>
-</div>
-<br><br><br>
-<div class="row justify-content-center">
-    <?php
-        printDivModal("Tacones Punta Fina",'56,70$',"0","tacones.jpeg",'taconesModal','Tacones de punta Fina, de tacon de cuero de la marca Aqua color Rosado talla 40','taconesJs');
-        printDivModal('Mesa de Madera Roble','111$',"1","mesa.jpg",'mesaModal','Mesa de madera de roble de 35cm de alto y 50 cm de largo, hecha 100% madera de roble','mesaJs');
-        printDivModal('Dragon Slayer Berseker','150',"1","dragon-slayer.webp",'dragonslModal','Replica de 1,65 cm de largo de la espada de Guns de Berkerk hecho de 100% plastico solidificado','espadaJs');
-        printDivModal('Alma del Lord del Fuego','999.99$',"1","alma-de-los-senores.jpg",'almaModal','Alma de los Lords del fuego nacidos de la Flama primigenia obtorgando el poder de Arremter contra el Fin','almaJs');
-        printDivModal('Blue Jeans','52.07$',"1","pantalones.png",'pantalonesModal','Pantalones originales de la Marca Blue Jean originales tall L y XL','pantalonesJs');
-    ?>
-</div>
-<br><br>
-</body>
-</html>
-<?php
+<div class="container-fluid">
+        <?php
+        $count = 0;
+        foreach ($products as $data) {
+    
+            //cuando el contador llega a un multiplo de 5 crear un nuevo row
+            if ($count % 5 === 0) {
+                echo "<div class='row justify-content-center'>";  
+            }
+            //impreme la data en base a el array de base de datos
+            printDiv($data['nombre'], $data['precio'],$data['stock'],$data['id'].'.png');
 
-?>
+            //cuando el contando llegue al 5 elemento cierra el row
+            if ($count % 5 === 4) {
+                echo "</div></br></br>";  
+            }
+
+            $count++; 
+        }
+        ?>
+    </div>
+
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">Producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row align-items-center">
+                <div class="col-6">
+                <img id="img" class="img-fluid rounded" alt="Product Image">
+                </div>
+                <div class="col-6">
+                    <p id="price"></p>
+                    <p id="stock"></p>
+                    <label for="quantity">Quantity Of Products</label>
+                    <br>
+                    <input type="number" id="quantity" class="form-control" min="1" value='0'>
+                    <br>
+                    <p id="amount"></p>
+                </div>
+            </div>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Add to Shopping Car</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    var productModal = document.getElementById('productModal');
+    productModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+
+        //obtengo los datos de cada producto
+        var name = button.getAttribute('data-name');
+        var price = button.getAttribute('data-price');
+        var stock = button.getAttribute('data-stock');
+        var img = button.getAttribute('data-img');
+
+        //imprimo la data en la modal
+        document.getElementById('modalTitle').textContent = name;
+        document.getElementById('price').textContent = `Precio: ${price}$`;
+        document.getElementById('stock').textContent = `Stock: ${stock}`;
+        document.getElementById('quantity').max=`${stock}`;
+        document.getElementById('img').src = `public/img/${img}`;
+        document.getElementById('amount').textContent = `Total: 0$`;
+
+        //input cantidad = MontoTotal
+        var inputCantidad = document.getElementById('quantity');
+        inputCantidad.addEventListener('input', function () {
+            var cantidad = parseInt(inputCantidad.value) || 0; 
+            var total = cantidad * parseFloat(price);
+            document.getElementById('amount').textContent = `Total: ${total.toFixed(2)}$`; 
+        });
+    });
+});
+</script>
+</html>

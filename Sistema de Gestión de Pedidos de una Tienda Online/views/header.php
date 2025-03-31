@@ -30,10 +30,10 @@
             <a class="nav-link" href="#"></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="index.php?action=userView">Products</a>
+            <a class="nav-link" href="index.php?action=productView">Products</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="index.php?action=teamView">Shopping Car</a>
+            <a class="nav-link" href="index.php?action=shooppingCarView">Shopping Car</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="index.php?action=projectView">Orders</a>

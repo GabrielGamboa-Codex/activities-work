@@ -19,3 +19,4 @@ switch ($action) {
         $product->indexProduct();
         break;
 }
+

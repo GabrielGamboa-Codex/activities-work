@@ -8,8 +8,9 @@ class shopCarModelModel extends Model
 
     protected $table = 'detalle_pedido';
 
-     public function pedidos()
+     public function detalle_pedidos()
      {
+        
          try {
          } catch (PDOException $e) {
              $error = ['status' =>  'ERROR', 'message' => "An error has occurred:" . $e->getMessage()];

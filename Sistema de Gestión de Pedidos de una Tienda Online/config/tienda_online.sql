@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-03-2025 a las 20:55:23
+-- Tiempo de generación: 31-03-2025 a las 21:15:43
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -81,7 +81,16 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id`, `nombre`, `precio`, `stock`) VALUES
-(1, 'Soul of Humanity', 102.00, 34);
+(1, 'Soul of Humanity', 999.99, 34),
+(2, 'Dorito 250gm', 7.55, 25),
+(3, 'Camisa Masculina', 35.00, 192),
+(4, 'Chaleco de Invierno', 125.00, 74),
+(5, 'Zapatos Masculinos Gala', 42.04, 17),
+(6, 'Blusa Fushia', 77.00, 54),
+(7, 'Tacones Punta Fina', 56.00, 233),
+(8, 'Mesa de Madera Roble', 111.00, 90),
+(9, 'Dragon Slayer Berseker', 150.99, 45),
+(10, 'Blue Jeans', 52.07, 299);
 
 --
 -- Índices para tablas volcadas
@@ -115,7 +124,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `detalle_pedido`
 --
 ALTER TABLE `detalle_pedido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido`
@@ -124,10 +133,10 @@ ALTER TABLE `pedido`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `productos`
+-- AUTO_INCREMENT de la tabla `productos`ss
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas
@@ -144,4 +153,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-

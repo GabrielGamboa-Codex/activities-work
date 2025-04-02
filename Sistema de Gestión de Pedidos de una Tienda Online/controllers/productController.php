@@ -8,8 +8,8 @@ class productController
         $teamModel = new productModel(); 
         $products = $teamModel->dataProduct();
         include __DIR__ . '/../views/header.php';
-        include __DIR__ . '/../views/productView.php';
         include __DIR__ . '/../views/footer.php';
+        include __DIR__ . '/../views/productView.php';
         return;
     }
 

@@ -13,7 +13,7 @@
   <!--Nabvars-->
   <nav class="navbar navbar-expand-lg bg-primary bg-opacity-75">
     <div class="container-fluid">
-      <a class="navbar-brand" href="">
+      <a class="navbar-brand" href="index.php?action=productView">
         <!-- Imagen del logo -->
         <img src="public/img/logo.png" alt="Logo" width="50" height="40" class="d-inline-block align-text-top">
         Shop of Abyss

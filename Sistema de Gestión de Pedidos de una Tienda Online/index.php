@@ -21,6 +21,10 @@ switch ($action) {
         break;
     case 'shooppingCarView':
         $carShop->indexShopCar();
+        break;
+    case 'ordersView':
+        $carShop->indexOrders();
+        break;
         
 }
 

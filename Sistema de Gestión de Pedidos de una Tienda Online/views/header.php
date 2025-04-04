@@ -36,7 +36,7 @@
             <a class="nav-link" href="index.php?action=shooppingCarView">Shopping Car</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="index.php?action=projectView">Orders</a>
+            <a class="nav-link" href="index.php?action=ordersView">Orders</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="index.php?action=projectView">Administration</a>

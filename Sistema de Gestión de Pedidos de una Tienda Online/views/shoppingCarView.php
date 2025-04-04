@@ -48,12 +48,13 @@ $totalGeneral = 0;
                 <p class="h4"><strong>Total de todos los productos:</strong> $<?php echo number_format($totalGeneral, 2); ?></p>
             </div>
                 <div class="col-md-6">
-                    <form>
+                    <form id="comprar">
                         <div class="mb-3">
                             <label for="cliente" class="form-label"><strong>Nombre del Cliente:</strong></label>
-                            <input type="text" id="cliente" name="cliente" class="form-control" placeholder="Ingrese su nombre" required>
+                            <input type="text" id="cliente" name="cliente" class="form-control" placeholder="Ingrese su nombre">
+                            <p id="cliente-error"></p>
                         </div>
-                            <button type="submit" class="btn btn-primary">Procesar Pedido</button>
+                            <button type="submit" class="btn btn-primary">Comprar</button>
                     </form>
                     <br>
                 </div>
@@ -68,8 +69,8 @@ $totalGeneral = 0;
 <script>
  $(document).ready(function () {
     $('.delete-icon').on('click', function () {
-        const productId = $(this).data('id'); 
-        const parentDiv = $(this).closest('.row');
+        var productId = $(this).data('id'); 
+        var parentDiv = $(this).closest('.row');
 
         //Borrar producto
         $.ajax({
@@ -93,6 +94,38 @@ $totalGeneral = 0;
             }
         });
     });
+
+    var cliente= document.getElementById('cliente');
+    var errorCliente= document.getElementById('cliente-error');
+
+        $('#comprar').on('submit', function (e) {
+        e.preventDefault();
+
+        var cliente = $('#cliente').val();
+        var productos = <?php echo json_encode($products); ?>; 
+
+        // Verificar si el campo cliente está vacío
+            if (cliente === "") {
+            // Mostrar el mensaje de error
+            errorCliente.textContent = "The Client cannot be empty";
+            errorCliente.style.color = "red";
+            return; // Detener el proceso si el campo está vacío
+        }
+        $.ajax({
+            url: './handler/shopCarHandler.php',
+            type: 'POST',
+            data: JSON.stringify({ cliente: cliente, productos: productos, action: "insert" }),
+            contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                console.log(response);
+                location.reload();
+                alert('Pedido procesado exitosamente.');
+                },
+                error: function () {
+                alert('Hubo un error al procesar el pedido.');
+                }
+            });
+        });
 });
 
 </script>

@@ -16,7 +16,7 @@ $totalGeneral = 0;
     <title>Document</title>
 </head>
 <body>
-    <br><br>
+    <br>
     <h1 class="text-center">Shopping Car</h1>
     <div class="container mt-4">
     <?php if(!empty($products)):?>
@@ -104,12 +104,10 @@ $totalGeneral = 0;
         var cliente = $('#cliente').val();
         var productos = <?php echo json_encode($products); ?>; 
 
-        // Verificar si el campo cliente está vacío
             if (cliente === "") {
-            // Mostrar el mensaje de error
             errorCliente.textContent = "The Client cannot be empty";
             errorCliente.style.color = "red";
-            return; // Detener el proceso si el campo está vacío
+            return; 
         }
         $.ajax({
             url: './handler/shopCarHandler.php',

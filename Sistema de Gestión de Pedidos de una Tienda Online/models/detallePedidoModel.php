@@ -10,6 +10,18 @@ class detallePedidoModel extends Model
     public $timestamps = false;
     protected $fillable = ['pedido_id', 'producto_id', 'cantidad', 'subtotal'];
 
+        // Relación: llave foranea pedido_id
+        public function pedido()
+        {
+            return $this->belongsTo(pedidoModel::class, 'pedido_id');
+        }
+    
+        // Relación: llave foranea producto_id
+        public function producto()
+        {
+            return $this->belongsTo(productModel::class, 'producto_id');
+        }        
+
      public function detalleInsert($id, $productId, $amount, $subtotal)
      {
         $pedido = self::create([
@@ -23,6 +35,6 @@ class detallePedidoModel extends Model
              $error = ['status' =>  'ERROR', 'message' => "An error has occurred:" . $e->getMessage()];
              echo json_encode($error);
          }
-     }
+     }    
  }
  

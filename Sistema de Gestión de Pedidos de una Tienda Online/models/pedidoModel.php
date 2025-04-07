@@ -9,6 +9,12 @@ class pedidoModel extends Model
     public $timestamps = false;
     protected $fillable = ['cliente', 'total', 'estado', 'fecha_creacion'];
 
+    // Relación: llave primaria pedido_id
+    public function detalles()
+    {
+      return $this->hasMany(detallePedidoModel::class, 'pedido_id');
+    }
+
     public function pedidoInsert($cliente, $total)
     {
         try {
@@ -26,5 +32,6 @@ class pedidoModel extends Model
             echo json_encode($error);
         }
     }
+
 }
 ?>

@@ -83,7 +83,7 @@
             </div>
         </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-success">Add to Shopping Car</button>
+        <button type="button" class="btn btn-success"><i class="bi bi-cart-plus"></i> Add to Shopping Car</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>

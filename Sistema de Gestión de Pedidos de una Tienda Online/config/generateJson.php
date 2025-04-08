@@ -6,14 +6,13 @@ $data = json_decode(file_get_contents('php://input'), true);
 
 //A#adir producto
 if($data['action'] === "generate"){
-    // Leer el contenido actual del archivo JSON
     $products = [];
     if (file_exists($jsonFile)) {
         $products = json_decode(file_get_contents($jsonFile), true);
     }
 
     $found = false;
-    foreach ($products as &$product) { // Usa referencia (&) para modificar directamente el producto
+    foreach ($products as &$product) { // aqui se usa para hacer referencia al indice principal
         if ($product['id'] === $data['id'] && $product['name'] === $data['name']) {
             //si exite la data la actualiza
             $product['quantity'] += $data['quantity'];
@@ -52,7 +51,6 @@ if ($data['action'] === 'delete') {
             // Reescribir el archivo JSON actualizado
             file_put_contents($jsonFile, json_encode(array_values($filteredProducts), JSON_PRETTY_PRINT));
 
-            // Responder con éxito
             echo json_encode(['success' => true]);
             exit;
         }

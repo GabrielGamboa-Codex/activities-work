@@ -126,17 +126,17 @@
         }
 
         $.ajax({
-            url: './handler/shopCarHandler.php',
+            url: './handler/',
             type: 'POST',
-            data: JSON.stringify({ cliente: cliente, productos: productos, action: "insert" }),
+            data:,
             contentType: 'application/json; charset=utf-8',
                 success: function (response) {
                 console.log(response);
                 location.reload();
-                alert('Pedido procesado exitosamente.');
+                alert('Se ha Editado Correctamente.');
                 },
                 error: function () {
-                alert('Hubo un error al procesar el pedido.');
+                alert('Hubo un error al procesar al Editar.');
                 }
             });
         });

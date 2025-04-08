@@ -9,4 +9,5 @@ class adminController
         include __DIR__ . '/../views/adminView.php';
         return;
     }
+
 }

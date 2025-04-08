@@ -62,7 +62,7 @@
                         <option value="">Select</option>
                         <option value="pendiente">Pendiente</option>
                         <option value="procesado">Procesado</option>
-                        <option value="enviando">Enviado</option>
+                        <option value="enviado">Enviado</option>
                         <option value="entregado">Entregado</option>
                     </select>
                     <p id="errorSelect"></p>
@@ -79,7 +79,7 @@
 </body>
 <script>
     $(document).ready(function () {
-        var userTable = $('#adminTable').DataTable({ 
+        var adminTable = $('#adminTable').DataTable({ 
         ajax: {
         url: "./handler/orderHandler.php",
         method: "POST",
@@ -97,14 +97,15 @@
             { targets: 0, visible: false },
             { targets: 1, className: 'dt-body-center' },
             { targets: 2, className: 'dt-body-center' },
-            { targets: 3, className: 'dt-body-center' },
+            { targets: 3, className: 'dt-left-center' },
             { targets: 4, className: 'dt-body-center' } 
         ]
     });
 
+    var data;
+
     $('#adminTable tbody').on('click', 'tr', function () {
-        var rowData = userTable.row(this).data(); 
-        console.log(rowData); 
+        data = adminTable.row(this).data();
         $('#editModal').modal('show'); 
     });
     
@@ -113,9 +114,9 @@
         width: '80%'
     });
 
-    $('#editar').on('submit', function (e) {
+    $('#editar').on('click', function (e) {
         e.preventDefault();
-
+        var id = data.id;
         var estatus = $('#estatus').val();
         var errorSelect= document.getElementById('errorSelect');
 
@@ -125,14 +126,21 @@
             return; 
         }
 
+        var editData = {
+            id: id,
+            estatus: estatus,
+            action: 'edit'
+        }
+
         $.ajax({
-            url: './handler/',
+            url: './handler/adminHandler.php',
             type: 'POST',
-            data:,
-            contentType: 'application/json; charset=utf-8',
+            data: editData,
                 success: function (response) {
                 console.log(response);
-                location.reload();
+                adminTable.ajax.reload();
+                $('#editModal').modal('hide');
+                $('#estatus').val('').trigger('change');  
                 alert('Se ha Editado Correctamente.');
                 },
                 error: function () {
@@ -140,7 +148,6 @@
                 }
             });
         });
-
 
 });
 

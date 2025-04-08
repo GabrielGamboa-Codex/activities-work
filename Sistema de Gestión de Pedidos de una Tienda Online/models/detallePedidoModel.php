@@ -31,7 +31,8 @@ class detallePedidoModel extends Model
             'subtotal' => $subtotal, 
         ]);
          try {
-         } catch (PDOException $e) {
+         } 
+         catch (PDOException $e) {
              $error = ['status' =>  'ERROR', 'message' => "An error has occurred:" . $e->getMessage()];
              echo json_encode($error);
          }

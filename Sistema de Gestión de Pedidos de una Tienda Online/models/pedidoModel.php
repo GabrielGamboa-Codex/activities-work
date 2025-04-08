@@ -27,9 +27,27 @@ class pedidoModel extends Model
             ]);
 
             return $pedido;
-        } catch (PDOException $e) {
+        } 
+        catch (PDOException $e) {
             $error = ['status' => 'ERROR', 'message' => "An error has occurred: " . $e->getMessage()];
             echo json_encode($error);
+        }
+    }
+
+    public function editEstado($id, $estatus)
+    {
+        try {
+            $pedido = self::find($id);
+            if ($pedido) {
+            $pedido->estado = $estatus;
+            $pedido->save();
+            } 
+            else {
+                return ['status' => 'ERROR', 'message' => 'Pedido no encontrado.'];
+            }
+        } 
+        catch (PDOException $e) {
+            return ['status' => 'ERROR', 'message' => 'Ocurrió un error: ' . $e->getMessage()];
         }
     }
 

@@ -25,6 +25,7 @@
                 <table id="orderTable" class="display">
                     <thead>
                         <tr>
+                        <th>ID</th>
                         <th>Cliente</th>
                         <th>Estado</th>
                         <th>Productos</th>
@@ -49,16 +50,18 @@
         dataSrc: '',
         },
         columns: [
-            { data: 'cliente', title: 'Cliente' },          // Nombre del cliente
-            { data: 'estado', title: 'Estado' },           // Estado del pedido
-            { data: 'productos', title: 'Productos' },     // Lista de productos
-            { data: 'total', title: 'Total del Pedido' }   // Total del pedido
+            { data: 'id' },   
+            { data: 'cliente'},          // Nombre del cliente
+            { data: 'estado'},           // Estado del pedido
+            { data: 'productos'},     // Lista de productos
+            { data: 'total'}   // Total del pedido
         ],
         columnDefs: [
-            { targets: 0, className: 'dt-body-center' },
+            { targets: 0, visible: false },
             { targets: 1, className: 'dt-body-center' },
-            { targets: 2, className: 'dt-body-left' },
-            { targets: 3, className: 'dt-body-center' } 
+            { targets: 2, className: 'dt-body-center' },
+            { targets: 3, className: 'dt-body-left' },
+            { targets: 4, className: 'dt-body-center' } 
         ]
     });
 

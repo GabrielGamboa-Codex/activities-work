@@ -33,6 +33,7 @@ class orderController
                 }
         
                 $data[] = [
+                    'id' => $pedido->id,
                     'cliente' => $pedido->cliente,
                     'estado' => $pedido->estado,
                     'productos' => '<ul>' . $productos . '</ul>',

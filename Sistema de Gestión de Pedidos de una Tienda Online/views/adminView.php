@@ -13,10 +13,12 @@
         text-align: center;
         vertical-align: middle;
         }
-
-        table.dataTable tbody tr {
-            cursor: pointer;
+        
+        table.dataTable tbody tr:hover {
+        background-color:rgb(204, 207, 216); /* Cambia el color de fondo */
+        cursor: pointer; /* Cambia el cursor a una mano */
         }
+
     </style>
 </head>
 <body>
@@ -29,6 +31,7 @@
                 <table id="adminTable" class="display">
                     <thead>
                         <tr>
+                        <th>Id</th>
                         <th>Cliente</th>
                         <th>Estado</th>
                         <th>Productos</th>
@@ -42,28 +45,41 @@
             </div>
         </div>
     </div>
+    <br>
 
-    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+<div class="modal fade modal-lg" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle">Editar Registro</h5>
+        <h5 class="modal-title" id="editModalLabel">Edit Status</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-warning"><i class="bi bi-pencil-square">Edit</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <label for="estatus">New Status</label>
+                    <select name="estatus" id="estatus" class="form-select">
+                        <option value="">Select</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="procesado">Procesado</option>
+                        <option value="enviando">Enviado</option>
+                        <option value="entregado">Entregado</option>
+                    </select>
+                    <p id="errorSelect"></p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+            <button type="button" class="btn btn-warning" id="editar">Save Edit</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
     </div>
   </div>
 </div>
-
 </body>
 <script>
     $(document).ready(function () {
-    var userTable = $('#adminTable').DataTable({ 
+        var userTable = $('#adminTable').DataTable({ 
         ajax: {
         url: "./handler/orderHandler.php",
         method: "POST",
@@ -71,19 +87,62 @@
         dataSrc: '',
         },
         columns: [
+            { data: 'id' },
             { data: 'cliente' },        
             { data: 'estado'},                    
             { data: 'productos'},   
             { data: 'total'}   
         ],
         columnDefs: [
-            { targets: 0, className: 'dt-body-center' },
+            { targets: 0, visible: false },
             { targets: 1, className: 'dt-body-center' },
-            { targets: 2, className: 'dt-body-left' },
-            { targets: 3, className: 'dt-body-center' } 
+            { targets: 2, className: 'dt-body-center' },
+            { targets: 3, className: 'dt-body-center' },
+            { targets: 4, className: 'dt-body-center' } 
         ]
     });
 
+    $('#adminTable tbody').on('click', 'tr', function () {
+        var rowData = userTable.row(this).data(); 
+        console.log(rowData); 
+        $('#editModal').modal('show'); 
+    });
+    
+    $('#estatus').select2({
+        dropdownParent: $('#editModal'),
+        width: '80%'
+    });
+
+    $('#editar').on('submit', function (e) {
+        e.preventDefault();
+
+        var estatus = $('#estatus').val();
+        var errorSelect= document.getElementById('errorSelect');
+
+        if (estatus === "") {
+            errorSelect.textContent = "The Select cannot be empty, Choose a Option";
+            errorSelect.style.color = "red";
+            return; 
+        }
+
+        $.ajax({
+            url: './handler/shopCarHandler.php',
+            type: 'POST',
+            data: JSON.stringify({ cliente: cliente, productos: productos, action: "insert" }),
+            contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                console.log(response);
+                location.reload();
+                alert('Pedido procesado exitosamente.');
+                },
+                error: function () {
+                alert('Hubo un error al procesar el pedido.');
+                }
+            });
+        });
+
+
 });
+
 </script>
 </html>

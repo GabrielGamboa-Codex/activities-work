@@ -1,1 +1,20 @@
-[]
+[
+    {
+        "id": "2",
+        "name": "Dorito 250gm",
+        "price": "7.55",
+        "quantity": 2,
+        "total": "15.10",
+        "img": "2.png",
+        "action": "generate"
+    },
+    {
+        "id": "4",
+        "name": "Chaleco de Invierno",
+        "price": "125.00",
+        "quantity": 3,
+        "total": "375.00",
+        "img": "4.png",
+        "action": "generate"
+    }
+]

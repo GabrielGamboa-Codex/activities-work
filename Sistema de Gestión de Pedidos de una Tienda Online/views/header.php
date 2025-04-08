@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="public/datatable/datatables.min.css">
   <link rel="stylesheet" href="public/datatable/dataTables.bootstrap5.css">  
   <link rel="stylesheet" href="public/css/css.css">
+  <link rel="stylesheet" href="public/select2/dist/css/select2.min.css">
 </head>
 
 <body>

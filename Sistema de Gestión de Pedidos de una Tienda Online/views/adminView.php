@@ -15,8 +15,8 @@
         }
         
         table.dataTable tbody tr:hover {
-        background-color:rgb(204, 207, 216); /* Cambia el color de fondo */
-        cursor: pointer; /* Cambia el cursor a una mano */
+        background-color:rgb(204, 207, 216); 
+        cursor: pointer; 
         }
 
     </style>

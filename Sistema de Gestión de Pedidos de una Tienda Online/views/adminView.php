@@ -57,8 +57,8 @@
       <div class="modal-body">
             <div class="row">
                 <div class="col-lg-10 offset-lg-1">
-                    <label for="estatus">New Status</label>
-                    <select name="estatus" id="estatus" class="form-select">
+                    <label for="status">New Status</label>
+                    <select name="status" id="status" class="form-select">
                         <option value="">Select</option>
                         <option value="pendiente">Pendiente</option>
                         <option value="procesado">Procesado</option>
@@ -70,7 +70,7 @@
             </div>
         </div>
         <div class="modal-footer d-flex justify-content-center">
-            <button type="button" class="btn btn-warning" id="editar">Save Edit</button>
+            <button type="button" class="btn btn-warning" id="edit">Save Edit</button>
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
         </div>
     </div>
@@ -109,18 +109,18 @@
         $('#editModal').modal('show'); 
     });
     
-    $('#estatus').select2({
+    $('#status').select2({
         dropdownParent: $('#editModal'),
         width: '80%'
     });
 
-    $('#editar').on('click', function (e) {
+    $('#edit').on('click', function (e) {
         e.preventDefault();
         var id = data.id;
-        var estatus = $('#estatus').val();
+        var status = $('#status').val();
         var errorSelect= document.getElementById('errorSelect');
 
-        if (estatus === "") {
+        if (status === "") {
             errorSelect.textContent = "The Select cannot be empty, Choose a Option";
             errorSelect.style.color = "red";
             return; 
@@ -128,7 +128,7 @@
 
         var editData = {
             id: id,
-            estatus: estatus,
+            status: status,
             action: 'edit'
         }
 
@@ -140,11 +140,11 @@
                 console.log(response);
                 adminTable.ajax.reload();
                 $('#editModal').modal('hide');
-                $('#estatus').val('').trigger('change');  
-                alert('Se ha Editado Correctamente.');
+                $('#status').val('').trigger('change');  
+                alert('The Status has been edited successfully.');
                 },
                 error: function () {
-                alert('Hubo un error al procesar al Editar.');
+                alert('As a ocurred Error to Edit.');
                 }
             });
         });

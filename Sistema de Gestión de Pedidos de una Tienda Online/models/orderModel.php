@@ -3,30 +3,29 @@ require_once __DIR__ . '/../config/database.php';
 
 use Illuminate\Database\Eloquent\Model;
 
-class pedidoModel extends Model
+class orderModel extends Model
 {
     protected $table = 'pedido'; 
     public $timestamps = false;
     protected $fillable = ['cliente', 'total', 'estado', 'fecha_creacion'];
 
-    // Relación: llave primaria pedido_id
     public function detalles()
     {
-      return $this->hasMany(detallePedidoModel::class, 'pedido_id');
+      return $this->hasMany(detailsOrderModel::class, 'pedido_id');
     }
 
-    public function pedidoInsert($cliente, $total)
+    public function orderInsert($client, $total)
     {
         try {
             $date = date('Y-m-d H:i:s');
-            $pedido = self::create([
-                'cliente' => $cliente,
+            $order = self::create([
+                'cliente' => $client,
                 'total' => $total,
                 'estado' => 'pendiente',
                 'fecha_creacion' =>$date, 
             ]);
 
-            return $pedido;
+            return $order;
         } 
         catch (PDOException $e) {
             $error = ['status' => 'ERROR', 'message' => "An error has occurred: " . $e->getMessage()];
@@ -34,20 +33,20 @@ class pedidoModel extends Model
         }
     }
 
-    public function editEstado($id, $estatus)
+    public function editStatus($id, $status)
     {
         try {
             $pedido = self::find($id);
             if ($pedido) {
-            $pedido->estado = $estatus;
+            $pedido->estado = $status;
             $pedido->save();
             } 
             else {
-                return ['status' => 'ERROR', 'message' => 'Pedido no encontrado.'];
+                return ['status' => 'ERROR', 'message' => 'Order no Found.'];
             }
         } 
         catch (PDOException $e) {
-            return ['status' => 'ERROR', 'message' => 'Ocurrió un error: ' . $e->getMessage()];
+            return ['status' => 'ERROR', 'message' => 'An error has occurred: ' . $e->getMessage()];
         }
     }
 

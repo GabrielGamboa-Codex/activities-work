@@ -1,13 +1,13 @@
 <?php
 
-require_once __DIR__ . '/../models/pedidoModel.php';
+require_once __DIR__ . '/../models/orderModel.php';
 
 if ($_POST['action'] == 'edit') 
 {
 
     $id = $_POST['id'];
-    $estatus = $_POST['estatus'];
+    $status = $_POST['status'];
 
-    $data = new pedidoModel;
-    $data->editEstado($id, $estatus);
+    $data = new orderModel;
+    $data->editStatus($id, $status);
 }

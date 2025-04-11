@@ -51,10 +51,10 @@
         },
         columns: [
             { data: 'id' },   
-            { data: 'cliente'},          // Nombre del cliente
-            { data: 'estado'},           // Estado del pedido
-            { data: 'productos'},     // Lista de productos
-            { data: 'total'}   // Total del pedido
+            { data: 'cliente'},       
+            { data: 'estado'},          
+            { data: 'productos'},     
+            { data: 'total'}  
         ],
         columnDefs: [
             { targets: 0, visible: false },

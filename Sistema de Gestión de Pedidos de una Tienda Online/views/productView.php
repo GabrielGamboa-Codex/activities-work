@@ -1,5 +1,4 @@
 <?php
-    //funcion para imprimir el div
     function printDiv($id,$name,$price,$stock,$img)
     {
         echo"
@@ -34,21 +33,19 @@
 </head>
 <body>
 <br>
-<h1 class="text-center">List of Product</h1>
+<h1 class="text-center">List of Products</h1>
 <br><br>
 <div class="container-fluid">
         <?php
         $count = 0;
         foreach ($products as $data) {
     
-            //cuando el contador llega a un multiplo de 5 crear un nuevo row
             if ($count % 5 === 0) {
                 echo "<div class='row justify-content-center'>";  
             }
-            //impreme la data en base a el array de base de datos
+
             printDiv($data['id'],$data['nombre'], $data['precio'],$data['stock'],$data['id'].'.png');
 
-            //cuando el contando llegue al 5 elemento cierra el row
             if ($count % 5 === 4) {
                 echo "</div></br></br>";  
             }
@@ -62,7 +59,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle">Producto</h5>
+        <h5 class="modal-title" id="modalTitle">Product</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -96,30 +93,28 @@ document.addEventListener('DOMContentLoaded', () => {
     productModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget;
 
-        // Obtengo los data
         var id = button.getAttribute('data-id');
         var name = button.getAttribute('data-name');
         var price = button.getAttribute('data-price');
         var stock = button.getAttribute('data-stock');
         var img = button.getAttribute('data-img');
 
-        // Imprimo la data en la modal
+
         document.getElementById('modalTitle').textContent = name;
-        document.getElementById('price').textContent = `Precio: ${price}$`;
+        document.getElementById('price').textContent = `Preci: ${price}$`;
         document.getElementById('stock').textContent = `Stock: ${stock}`;
         document.getElementById('quantity').max = `${stock}`;
         document.getElementById('img').src = `public/img/${img}`;
         document.getElementById('amount').textContent = `Total: 0$`;
 
         
-        var inputCantidad = document.getElementById('quantity');
-        inputCantidad.addEventListener('input', function () {
-            var cantidad = parseInt(inputCantidad.value) || 0; 
-            var total = cantidad * parseFloat(price);
+        var inputAmount = document.getElementById('quantity');
+        inputAmount.addEventListener('input', function () {
+            var amount = parseInt(inputAmount.value) || 0; 
+            var total = amount * parseFloat(price);
             document.getElementById('amount').textContent = `Total: ${total.toFixed(2)}$`; 
         });
 
-        //evento del boton a#adir
         var addToCart = productModal.querySelector('.btn-success');
         addToCart.onclick = function (event) {
             event.preventDefault(); 
@@ -130,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (quantity > 0) {
                 errorQuantity.textContent = "";
 
-                // objeto JSON con los datos del producto
                 var productData = {
                     id: id,
                     name: name,
@@ -147,19 +141,17 @@ document.addEventListener('DOMContentLoaded', () => {
                      contentType: 'application/json', 
                      data: JSON.stringify(productData),
                      success: function(response) {
-                        console.log('Producto guardado correctamente:', response);
                         document.getElementById('quantity').value = `0`;
-                        alert('Producto añadido al carrito');
+                        alert('Product Add to Shopping Car:');
                      },
                      error: function(error) {
-                        console.error('Error al guardar el producto:', error);
+                        console.error('Error to Add to Shopping Car:', error);
                      }
                 });
 
                 var modal = bootstrap.Modal.getInstance(productModal); 
                 modal.hide(); 
             } else {
-                //en caso de ser 0 mostrar un error
                 errorQuantity.textContent = " must be greater than 0.";
                 errorQuantity.style.color = "red";
             }
